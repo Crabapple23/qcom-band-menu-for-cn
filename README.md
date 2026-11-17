@@ -77,7 +77,7 @@ band
 
 启动器已安装至 Termux 现有的可执行文件路径中，因此无需重启 Termux 或修改 `.profile`。
 
-# 锁小区（Cell Lock）
+# 小区锁定（Cell Lock）
 
 锁小区页面提供两种模式，可通过 SIM 卡标签页旁边的切换开关进行选择。
 
