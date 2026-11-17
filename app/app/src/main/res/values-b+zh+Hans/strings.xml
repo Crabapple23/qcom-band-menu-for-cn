@@ -5,6 +5,10 @@
     <string name="info_about">关于</string>
     <string name="info_version">版本：%1$s（%2$s）</string>
     <string name="info_package">包名：%1$s</string>
+    <string name="info_app_name">高通网络工具</string>
+    <string name="info_chinese_edition">中文版</string>
+    <string name="info_chinese_by">汉化与维护：@Crabapple23</string>
+    <string name="info_github_repo">github.com/Crabapple23/qcom-band-menu-by-cn</string>
     <string name="info_credits">致谢</string>
     <string name="info_powered_by">技术支持</string>
     <string name="common_menu">菜单</string>

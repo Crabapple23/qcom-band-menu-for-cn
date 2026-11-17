@@ -5,6 +5,10 @@
     <string name="info_about">เกี่ยวกับ</string>
     <string name="info_version">เวอร์ชัน: %1$s (%2$s)</string>
     <string name="info_package">แพ็กเกจ: %1$s</string>
+    <string name="info_app_name">Qualcomm Network Tool</string>
+    <string name="info_chinese_edition">ฉบับภาษาจีน</string>
+    <string name="info_chinese_by">แปลและดูแลโดย @Crabapple23</string>
+    <string name="info_github_repo">github.com/Crabapple23/qcom-band-menu-by-cn</string>
     <string name="info_credits">เครดิต</string>
     <string name="info_powered_by">ขับเคลื่อนโดย</string>
     <string name="common_menu">เมนู</string>

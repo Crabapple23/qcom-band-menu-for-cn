@@ -16,7 +16,7 @@ android {
         ndk {
             abiFilters += listOf("arm64-v8a")
         }
-        manifestPlaceholders["appLabel"] = "高通频段管理"
+        manifestPlaceholders["appLabel"] = "高通网络工具"
     }
 
     buildTypes {
@@ -43,7 +43,7 @@ android {
             initWith(getByName("release"))
             applicationIdSuffix = ".staging"
             versionNameSuffix = "-staging"
-            manifestPlaceholders["appLabel"] = "QBM 测试版"
+            manifestPlaceholders["appLabel"] = "高通网络工具 测试版"
             signingConfig = signingConfigs.getByName("debug")
             isProfileable = true
             matchingFallbacks += listOf("release")

@@ -40,6 +40,35 @@ zh = 包名：{package}
 de = Paket: {package}
 ru = Имя пакета: {package}
 
+
+[info.app_name]
+en = Qualcomm Network Tool
+th = Qualcomm Network Tool
+zh = 高通网络工具
+de = Qualcomm Network Tool
+ru = Qualcomm Network Tool
+
+[info.chinese_edition]
+en = Chinese edition
+th = ฉบับภาษาจีน
+zh = 中文版
+de = Chinesische Ausgabe
+ru = Китайская версия
+
+[info.chinese_by]
+en = Translated and maintained by @Crabapple23
+th = แปลและดูแลโดย @Crabapple23
+zh = 汉化与维护：@Crabapple23
+de = Übersetzt und gepflegt von @Crabapple23
+ru = Перевод и поддержка: @Crabapple23
+
+[info.github_repo]
+en = github.com/Crabapple23/qcom-band-menu-by-cn
+th = github.com/Crabapple23/qcom-band-menu-by-cn
+zh = github.com/Crabapple23/qcom-band-menu-by-cn
+de = github.com/Crabapple23/qcom-band-menu-by-cn
+ru = github.com/Crabapple23/qcom-band-menu-by-cn
+
 [info.credits]
 en = Credits
 th = เครดิต

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Paper tone of the icon art, measured from it; keep in sync when the art changes. -->
+<resources>
+    <color name="ic_launcher_background">#FEF0D7</color>
+</resources>

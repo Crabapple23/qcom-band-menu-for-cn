@@ -1,5 +1,6 @@
 package dev.qcom.bandmenu.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -70,6 +72,7 @@ fun InfoScreen(
     val navbarSpace = navbarSpace()
     val statusBarInset = WindowInsets.statusBars.asPaddingValues(density).calculateTopPadding()
     val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
     var showLanguage by remember { mutableStateOf(false) }
     var showScale by remember { mutableStateOf(false) }
     val language = remember { AppLanguage.saved(context) }
@@ -90,7 +93,7 @@ fun InfoScreen(
 
             SmallTitle(stringResource(R.string.info_about))
             Text(
-                "Qualcomm Band Menu",
+                stringResource(R.string.info_app_name),
                 style = MiuixTheme.textStyles.title2,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
@@ -106,6 +109,24 @@ fun InfoScreen(
                 stringResource(R.string.info_package, BuildConfig.APPLICATION_ID),
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            SmallTitle(stringResource(R.string.info_chinese_edition))
+            Text(
+                stringResource(R.string.info_chinese_by),
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                stringResource(R.string.info_github_repo),
+                color = MiuixTheme.colorScheme.primary,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { runCatching { uriHandler.openUri(GITHUB_REPO_URL) } }
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -249,3 +270,5 @@ private fun scaleName(scale: DisplayScale): String = stringResource(when (scale)
     DisplayScale.LARGE -> R.string.scale_large
     DisplayScale.SMALL -> R.string.scale_small
 })
+
+private const val GITHUB_REPO_URL = "https://github.com/Crabapple23/qcom-band-menu-by-cn"

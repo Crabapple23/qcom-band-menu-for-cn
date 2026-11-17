@@ -5,6 +5,10 @@
     <string name="info_about">About</string>
     <string name="info_version">Version: %1$s (%2$s)</string>
     <string name="info_package">Package: %1$s</string>
+    <string name="info_app_name">Qualcomm Network Tool</string>
+    <string name="info_chinese_edition">Chinese edition</string>
+    <string name="info_chinese_by">Translated and maintained by @Crabapple23</string>
+    <string name="info_github_repo">github.com/Crabapple23/qcom-band-menu-by-cn</string>
     <string name="info_credits">Credits</string>
     <string name="info_powered_by">Powered by</string>
     <string name="common_menu">Menu</string>
