@@ -5,3 +5,4 @@
 *.bat
 *.sh
 !app/i18n/strings.txt
+local.properties

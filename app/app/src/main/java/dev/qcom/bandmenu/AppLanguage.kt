@@ -11,9 +11,15 @@ object AppLanguage {
     private const val PREFS = "app_language"
     private const val KEY = "tag"
 
-    /** The chosen language tag, or "" for the phone's language. */
+    /** This Chinese fork opens in Simplified Chinese out of the box; the Info
+     *  menu can still switch it to the phone's language or English. */
+    private const val DEFAULT_TAG = "zh-Hans"
+
+    /** The chosen language tag: [DEFAULT_TAG] until one is picked, "" for the
+     *  phone's language. */
     fun saved(context: Context): String =
-        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(KEY, "").orEmpty()
+        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).getString(KEY, null)
+            ?: DEFAULT_TAG
 
     fun save(context: Context, tag: String) {
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit().putString(KEY, tag).apply()
