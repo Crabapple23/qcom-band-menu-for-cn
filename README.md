@@ -1,5 +1,5 @@
-```markdown
-[English](README.md) | [简体中文](README_zh.md)
+
+[简体中文](README.md) | [English](README-en.md)
 
 # 高通 QMI 频段控制（Qualcomm QMI Band Control）
 
@@ -448,7 +448,5 @@ NR 相关日志：
 本项目也极大地受益于 [libqmi 项目](https://github.com/linux-mobile-broadband/libqmi) 提供的文档、源代码和 QMI 协议定义。
 
 同时感谢由 Lev Walkin 创建（[原始仓库](https://github.com/vlm/asn1c)）并由 mouse07410 及其他贡献者维护的 [asn1c](https://github.com/mouse07410/asn1c) 项目。DIAG 守护进程中的 NR RRC 解码器正是借助该项目从 3GPP TS 38.331 ASN.1 定义文件生成而来的（[许可证文件](https://www.google.com/search?q=app/binary/ASN1C-LICENSE)）。
-
-```
 
 ```
