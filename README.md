@@ -1,427 +1,415 @@
-# Qualcomm QMI Band Control
+[简体中文](README.md) | [English](README-en.md)
 
-Apply cellular forcings such as RAT preferences, band locking, and 5G-NR modes through QMI commands over Android's QRTR interface. The project is available in both command-line and Android app versions.
+# 高通 QMI 频段控制（Qualcomm QMI Band Control）
 
-# Features
+通过 Android 的 QRTR 接口发送 QMI 指令，实现网络制式（RAT）偏好设置、频段锁定（锁频）以及 5G-NR 模式切换等蜂窝网络强制控制功能。本项目同时提供命令行工具和 Android 应用两个版本。
 
-- Read/modify forcing profiles for SIM 1 and SIM 2
-- Select RAT preferences and band locking for for GSM, WCDMA, LTE, and NR
-- Configure NR-SA and NR-NSA band masks independently (Credit: [h3nnes](https://github.com/h3nnes))
-- Select SA+NSA, NSA-only, or SA-only NR operating modes
-- Query modem-reported hardware-supported bands
-- Restore band locks to hardware defaults
-- Instant Cell & ARFCN locking (app only)
-- Live cell lock: the neighbours the modem reports, one tap to lock to (app only)
-- Live Network page: serving cell, LTE carrier aggregation, NR cells, antennas and neighbour cells, read from the modem over QMI (app only)
-- Band toggles that apply app-wide: a band hidden there is hidden from the neighbour lists too (app only)
-- Advanced network metrics with DIAG mode (experimental)
-  - MIMO, Rank, MCS, modulation schemes, RBs, CSI-RS ports etc
-  - PHY DL/UL throughput
-  - Detailed NRCA readings
-  - Antenna measurements per receive chain for every LTE and NR carrier (PCell and SCells)
-- Available as both an Android app and a command-line utility
+# 功能特性
 
-<img height="600" alt="image" src="https://github.com/user-attachments/assets/56620800-fa04-4f80-a2db-914f86331a60" />
-<img height="600"  alt="image" src="https://github.com/user-attachments/assets/e31a72ee-fb34-4c1f-8686-a4baf68045c2" />
-<img height="600" alt="image" src="https://github.com/user-attachments/assets/3a369f98-895e-4c53-94f1-f9e44227b51b" />
+- 读取/修改 SIM 1 和 SIM 2 的网络强制配置文件
+- 支持 GSM、WCDMA、LTE 和 NR 的网络制式（RAT）偏好选择与频段锁定
+- 独立配置 NR-SA 和 NR-NSA 频段掩码（鸣谢：[h3nnes](https://github.com/h3nnes)）
+- 支持选择 SA+NSA、仅 NSA（NSA-only）或仅 SA（SA-only）的 NR 运行模式
+- 查询基带（Modem）上报的硬件支持频段列表
+- 将频段锁定恢复为硬件默认设置
+- 即时小区（Cell）与频点（ARFCN）锁定（仅限 App 版）
+- 实时锁小区（Live cell lock）：实时列出基带上报的邻区信息，点击即可一键锁定（仅限 App 版）
+- 实时网络（Live Network）页面：通过 QMI 直接从基带读取主服务小区、LTE 载波聚合（CA）、NR 小区、天线及邻区信息（仅限 App 版）
+- 全局频段过滤开关：在此处隐藏的频段也会同步在邻区列表中隐藏（仅限 App 版）
+- 基于 DIAG 模式的高级网络指标监测（实验性功能）
+   - MIMO、Rank（秩）、MCS、调制方式、RB（资源块）数量、CSI-RS 端口等
+   - 物理层（PHY）下行/上行吞吐量
+   - 详细的 NRCA（5G 载波聚合）读数
+   - 每个 LTE 和 NR 载波（PCell 主小区及 SCell 辅小区）各接收通道（RX chain）的天线测量数据
+- 同时提供 Android 应用程序与命令行工具
 
+# 环境要求
 
-# Requirements
+- 搭载高通（Qualcomm）基带的设备
+- 已获取 Root 权限
+- App 版本需要 Android 11 及以上系统
+- 如需使用 DIAG 模式：设备需具备厂商 DIAG 动态库（`/vendor/lib64/libdiag.so`）且正在运行 `diag-router` 服务
+- 命令行版本需要终端环境（如 Termux 或 ADB Shell）
 
-- Qualcomm device
-- Root access
-- Android 11 or newer for the app version
-- For DIAG mode: the vendor DIAG library (`/vendor/lib64/libdiag.so`) and a running `diag-router`
-- A terminal environment, such as Termux or ADB shell, for command-line usage
+不同代际的高通基带、设备厂商定制、固件版本以及双卡实现方案之间可能存在兼容性差异。
 
-Compatibility may vary between Qualcomm modem generations, device manufacturers, firmware versions, and dual-SIM implementations.
+# 参与贡献
 
-# Contributing
+欢迎提交贡献！在提交 Issue 或 Pull Request 之前，请先阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
-Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before you open an issue or a pull request.
+# 安装与使用
 
-# Usage and Installation
+## Android 应用版
 
-## Android App
+从本仓库的 **Releases** 页面下载 APK 安装包，安装并在弹窗提示时授予 Root 权限即可。
 
-Download the APK from the repository's **Releases** section, install it, and grant root access when prompted.
+应用通过原生后端经由 QRTR 上的 QMI 协议直接与基带通信。
 
-The application uses the native backend to communicate directly with the modem through QMI over QRTR.
+## 命令行版本
 
-## Command-Line Version
+命令行版本可通过 Termux 或直接通过 ADB 启动。
 
-The command-line version can be launched through Termux or directly through ADB.
+### Termux 安装步骤
 
-### Termux Installation
+1. 下载编译好的 `qcom-band-menu` 二进制文件，并将其放入 Android 的 `Download` 目录下：
 
-1. Download the compiled `qcom-band-menu` binary and place it in Android's `Download` folder:
-
-   ```text
+   ```
    /sdcard/Download/qcom-band-menu
    ```
+2. 确保 Termux 拥有存储访问权限。如有需要，请运行：
 
-2. Make sure Termux has storage access. If required, run:
-
-   ```bash
+   ```
    termux-setup-storage
    ```
+3. 在普通的 Termux Shell 中运行以下命令完成安装并启动：
 
-3. Run the following command from the normal Termux shell:
-
-   ```bash
+   ```
    cp /sdcard/Download/qcom-band-menu "$PREFIX/bin/qcom-band-menu" && chmod 755 "$PREFIX/bin/qcom-band-menu" && printf '%s\n' '#!/data/data/com.termux/files/usr/bin/sh' 'exec su -c /data/data/com.termux/files/usr/bin/qcom-band-menu' > "$PREFIX/bin/band" && chmod 755 "$PREFIX/bin/band" && band
    ```
 
-Do not enter a root shell before running the installation command. The launcher itself uses `su -c` when starting the native binary.
+执行安装命令前请勿提前进入 Root Shell，启动脚本内部会自动调用 `su -c` 来运行原生二进制程序。
 
-After installation, launch the command-line interface at any time with:
+安装完成后，随时可以通过以下命令启动命令行界面：
 
-```bash
+```
 band
 ```
 
-The launcher is installed into Termux's existing executable path, so restarting Termux or editing `.profile` is not required.
-# Cell Lock
+启动器已安装至 Termux 现有的可执行文件路径中，因此无需重启 Termux 或修改 `.profile`。
 
-The Cell-Lock page has two modes, chosen by the toggle beside the SIM tabs.
+# 锁小区（Cell Lock）
 
-**Live** (the default) shows the neighbour cells the modem is reporting right now,
-read over QMI every second, in the same table the Network page uses (PCI, band,
-EARFCN, RSRP, RSRQ). Tapping a row locks to that cell:
+锁小区页面提供两种模式，可通过 SIM 卡标签页旁边的切换开关进行选择。
 
-| Row | Command sent |
+**实时模式（Live，默认）** 会通过 QMI 每秒读取一次基带当前上报的邻区信息，并以与“实时网络”页面相同的表格形式展示（PCI、频段、EARFCN、RSRP、RSRQ）。点击列表中的某一行即可锁定至该小区：
+
+| 列表行类型 | 发送的指令 |
 | --- | --- |
-| LTE neighbour | LTE cell lock, EARFCN + PCI |
-| NR neighbour (frequency only, the modem reports no NR PCI) | NR-ARFCN lock, with the SCS shown |
-| Locked row | releases that RAT's cell lock |
+| LTE 邻区 | LTE 小区锁定（EARFCN + PCI） |
+| NR 邻区（仅含频点信息，基带未上报 NR PCI） | NR-ARFCN 频点锁定（附带显示的 SCS 子载波间隔） |
+| 已锁定的行 | 解除对应网络制式（RAT）的小区锁定 |
 
-An NR serving cell that carries a PCI is locked as a cell (ARFCN + PCI + SCS +
-band). The enable/disable control at the top stops the modem reads (the list
-holds still while a cell is picked; locks still apply) and the **Bands** toggles
-choose which bands are listed — the same filter as the Bands page, so it applies
-to every page. WCDMA and GSM neighbours are listed with their measurements, but
-the modem has no cell lock for them, which the row says.
+如果当前 NR 主服务小区携带了 PCI 信息，则会作为完整小区进行锁定（ARFCN + PCI + SCS + 频段）。顶部的启用/暂停开关可停止读取基带数据（列表画面保持静止以便点选小区，锁定操作依然有效）；**Bands（频段）** 筛选开关用于控制显示哪些频段——该过滤规则与“频段”页面共用，因此对所有页面全局生效。WCDMA 和 GSM 邻区虽会列出测量数据，但基带本身不支持对这两种制式进行锁小区（对应行也会给出相应提示）。
 
-**Manual** keeps the original text fields for typing a lock by hand (NR-ARFCN,
-PCI, multi-PCI, gNB allowlist, LTE PCI, multi-cell and PLMN).
+**手动模式（Manual）** 保留了原有的文本输入框，支持手动输入参数进行锁定（NR-ARFCN、PCI、多 PCI、gNB 白名单、LTE PCI、多小区及 PLMN）。
 
-# How Does It Work?
+# 工作原理
 
-`qcom-band-menu` sends QMI commands through Android's **QRTR** transport using `AF_QIPCRTR` datagram sockets.
+`qcom-band-menu` 使用 `AF_QIPCRTR` 数据报套接字，通过 Android 的 **QRTR** 传输层发送 QMI 指令。
 
-```text
-Android app / Termux / ADB
+```
+Android App / Termux / ADB
             |
             v
       qcom-band-menu
             |
             | AF_QIPCRTR / SOCK_DGRAM
             v
-       QRTR control service
+       QRTR 控制服务
             |
-            | dynamic service discovery
+            | 动态服务发现
             v
-     Qualcomm QMI services
+     高通 QMI 服务组件
             |
-            +-- NAS (service 0x03)
-            |     RAT preferences
-            |     GSM/WCDMA/LTE/NR band masks
-            |     SIM subscription binding
-            |     NR-SA/NR-NSA masks
-            |     NR operating mode
+            +-- NAS (服务号 0x03)
+            |     RAT 网络制式偏好
+            |     GSM/WCDMA/LTE/NR 频段掩码
+            |     SIM 卡订阅绑定
+            |     NR-SA / NR-NSA 频段掩码
+            |     NR 运行模式
             |
-            +-- DMS (service 0x02)
-                  hardware-supported band capabilities
+            +-- DMS (服务号 0x02)
+                  硬件支持的频段能力查询
 ```
 
-### Dynamic QRTR Service Discovery
+### 动态 QRTR 服务发现
 
-QMI service ports are assigned at runtime and may differ between devices or modem firmware versions.
+QMI 服务端口是在运行时动态分配的，不同设备或基带固件版本之间可能各不相同。
 
-Instead of hardcoding a QRTR port, the native backend sends a lookup request to the QRTR control endpoint and searches for:
+原生后端没有硬编码 QRTR 端口，而是向 QRTR 控制端点发送查询请求，动态搜索以下服务：
 
-```text
+```
 QMI NAS service: 3
 QMI DMS service: 2
 QMI version:     1
 QMI instance:    0
 ```
 
-After receiving the modem's node and port, the backend opens a connected `AF_QIPCRTR` socket to that service.
+获取到基带对应的节点（node）和端口（port）后，后端便会向该服务建立已连接的 `AF_QIPCRTR` 套接字。
 
-### QMI Packet Format
+### QMI 数据包格式
 
-The QMI packets sent over QRTR use the following header:
+通过 QRTR 发送的 QMI 数据包采用以下头部结构：
 
-```text
-Offset  Size  Field
-0x00    1     QMI message type
-0x01    2     Transaction ID, little-endian
-0x03    2     Message ID, little-endian
-0x05    2     TLV payload length, little-endian
-0x07    ...   TLV payload
+```
+偏移量  字节数  字段说明
+0x00    1       QMI 消息类型
+0x01    2       事务 ID（Transaction ID，小端序）
+0x03    2       消息 ID（Message ID，小端序）
+0x05    2       TLV 载荷长度（小端序）
+0x07    ...     TLV 载荷数据
 ```
 
-Message types used by the tool:
+本工具使用的消息类型：
 
-```text
-0x00  Request
-0x02  Response
-0x04  Indication
+```
+0x00  Request（请求）
+0x02  Response（响应）
+0x04  Indication（指示）
 ```
 
-Each QMI response normally contains a result TLV:
+每条 QMI 响应通常都包含一个结果 TLV：
 
-```text
+```
 TLV ID: 0x02
-Value:
+值内容:
   uint16 result
   uint16 error
 ```
 
-A successful command returns:
+指令执行成功时返回：
 
-```text
+```
 result = 0x0000
 error  = 0x0000
 ```
 
-### Subscription Binding
+### 订阅绑定（SIM 卡选择）
 
-Before reading or changing a forcing profile, the NAS client is bound to the selected SIM using:
+在读取或修改强制配置之前，NAS 客户端会通过以下消息绑定到所选的 SIM 卡：
 
-```text
-QMI NAS message: 0x0045
+```
+QMI NAS 消息: 0x0045
 ```
 
-The bind value used by the tested implementation is:
+在已测试的实现中，绑定值定义如下：
 
-```text
+```
 0 = SIM 1
 1 = SIM 2
 ```
 
-Binding is socket-scoped. The bind request and all following reads or writes must therefore use the same NAS connection.
+绑定关系的作用域仅限当前套接字（Socket），因此绑定请求以及随后的所有读写操作都必须使用同一个 NAS 连接。
 
-This allows the tool to read and modify the forcing profile stored for each SIM independently.
+这一机制使得工具能够独立读取和修改每张 SIM 卡所保存的强制网络配置。
 
-### Reading the Current Configuration
+### 读取当前配置
 
-The current RAT and band preferences are read using:
+当前 RAT 和频段偏好通过以下消息读取：
 
-```text
-QMI NAS message: 0x0034
+```
+QMI NAS 消息: 0x0034
 Get System Selection Preference
 ```
 
-Important response TLVs include:
+响应中包含的关键 TLV 如下：
 
-```text
-0x11  RAT preference
-0x12  GSM/WCDMA band bitmap
-0x15  LTE B1-B64 bitmap
-0x23  Extended LTE bitmap
-0x2C  NR-SA band bitmap
-0x2D  NR-NSA band bitmap
-0x2B  Current NR operating mode when returned as a 4-byte field
+```
+0x11  RAT 网络制式偏好
+0x12  GSM/WCDMA 频段位图（Bitmap）
+0x15  LTE B1-B64 频段位图
+0x23  扩展 LTE 频段位图
+0x2C  NR-SA 频段位图
+0x2D  NR-NSA 频段位图
+0x2B  当前 NR 运行模式（当以 4 字节字段返回时）
 ```
 
-The NR operating-mode encoding is:
+NR 运行模式的编码定义如下：
 
-```text
+```
 0 = SA + NSA
-1 = NSA only
-2 = SA only
+1 = 仅 NSA (NSA only)
+2 = 仅 SA (SA only)
 ```
 
-### Applying RAT and Band Settings
+### 应用 RAT 与频段设置
 
-Forcing commands are sent using:
+强制控制指令通过以下消息发送：
 
-```text
-QMI NAS message: 0x0033
+```
+QMI NAS 消息: 0x0033
 Set System Selection Preference
 ```
 
-The tool sends narrow, independent updates instead of rewriting the entire modem configuration.
+本工具采用精细化的独立更新策略，而非重写整个基带配置。
 
-Examples:
+例如可单独下发：
 
-```text
-RAT only
-LTE bands only
-NR-SA bands only
-NR-NSA bands only
-NR mode only
+```
+仅修改 RAT 制式
+仅修改 LTE 频段
+仅修改 NR-SA 频段
+仅修改 NR-NSA 频段
+仅修改 NR 运行模式
 ```
 
-Important setter TLVs include:
+设置请求中的关键 TLV 包括：
 
-```text
-0x11  RAT preference
-0x12  GSM/WCDMA band bitmap
-0x15  LTE B1-B64 bitmap
-0x17  Change duration
-0x24  Extended LTE bitmap
-0x2B  Combined NR band bitmap
-0x2E  NR operating mode
-0x2F  NR-SA band bitmap
-0x30  NR-NSA band bitmap
+```
+0x11  RAT 网络制式偏好
+0x12  GSM/WCDMA 频段位图
+0x15  LTE B1-B64 频段位图
+0x17  变更持续时间（Change duration）
+0x24  扩展 LTE 频段位图
+0x2B  组合 NR 频段位图
+0x2E  NR 运行模式
+0x2F  NR-SA 频段位图
+0x30  NR-NSA 频段位图
 ```
 
-LTE bands use bit position `band - 1`.
+LTE 频段在位图中对应的比特位为 `band - 1`。
 
-For example:
+例如：
 
-```text
+```
 B1  -> bit 0
 B3  -> bit 2
 B28 -> bit 27
 ```
 
-NR bands use the same rule inside a 64-byte bitmap:
+NR 频段在 64 字节位图中遵循相同的映射规则：
 
-```text
+```
 n1  -> bit 0
 n41 -> bit 40
 n78 -> bit 77
 ```
 
-### Hardware Band Detection
+### 硬件频段检测
 
-The hardware-supported band list is queried through:
+硬件支持的频段列表通过以下服务和消息查询：
 
-```text
-QMI DMS service: 2
-QMI DMS message: 0x0045
+```
+QMI DMS 服务: 2
+QMI DMS 消息: 0x0045
 Get Band Capabilities
 ```
 
-The response contains:
+响应内容包含：
 
-```text
-Legacy GSM/WCDMA capability bitmap
-LTE capability bitmap
-Extended LTE band array
-NR band array
+```
+传统 GSM/WCDMA 频段能力位图
+LTE 频段能力位图
+扩展 LTE 频段数组
+NR 频段数组
 ```
 
-The tool converts these fields into band lists and uses them to:
+工具会将这些字段解析为具体的频段列表，并用于：
 
-- Reject unsupported band selections
-- Display the modem's supported GSM, WCDMA, LTE, and NR bands
-- Restore band masks to the hardware-supported defaults
+- 拦截并拒绝硬件不支持的频段选择
+- 展示基带实际支持的 GSM、WCDMA、LTE 和 NR 频段
+- 将频段掩码恢复为硬件支持的默认全开状态
 
-### Command Verification
+### 指令校验机制
 
-Some Qualcomm modem firmware updates the stored forcing state asynchronously.
+部分高通基带固件会以异步方式更新存储的强制状态。
 
-After a setter returns a success, the backend briefly waits and queries the modem again. This avoids showing stale values immediately after an accepted command.
+因此，在设置指令返回成功后，后端会短暂等待并重新查询一次基带状态，以避免在指令刚被接受时立即显示过期的旧数值。
 
-The command flow is therefore:
+完整的指令执行流程如下：
 
-```text
-Discover service
+```
+发现 QMI 服务
      |
-Open QRTR socket
+打开 QRTR 套接字
      |
-Bind selected SIM
+绑定目标 SIM 卡
      |
-Send QMI setter
+发送 QMI 设置指令
      |
-Check result TLV
+检查结果 TLV 状态
      |
-Wait for state propagation
+等待状态同步生效
      |
-Query current state
+查询当前最新状态
      |
-Return updated values to the CLI or Android app
+将更新后的数值返回给 CLI 或 Android 应用
 ```
 
-# DIAG Network Metrics
+# DIAG 网络指标
 
-QMI only reports what the modem summarizes for the user: the serving cell, signal levels, and a list of carrier frequencies. Per-carrier details such as MCS, resource blocks, rank, SINR of each secondary cell, or the physical-layer throughput are only available in the modem's **DIAG** logs.
+QMI 协议仅上报基带面向用户汇总的基础信息：主服务小区、信号强度以及载波频率列表。而单载波级别的详细底层参数——例如每个辅小区的 MCS、资源块（RB）、Rank、SINR 或物理层实时吞吐量——仅存在于基带的 **DIAG** 诊断日志中。
 
-DIAG mode reads these logs through the **Diag Consumer Interface (DCI)**, the same interface used by on-device diagnostic tools. A separate root helper, `qbm-diagd`, subscribes to a fixed set of log codes, decodes them on the phone, and passes a per-carrier summary to the app.
+DIAG 模式通过 **Diag Consumer Interface（DCI，诊断消费者接口）** 读取这些日志，这与设备端原生诊断工具所使用的接口一致。独立的 Root 守护进程 `qbm-diagd` 会订阅一组固定的日志代码（Log Codes），在手机本地完成解码，并将按载波汇总的数据传递给应用程序。
 
-```text
-Android app (Network page)
+```
+Android App (实时网络页面)
             |
-            | abstract socket "qbm_diagd", one request per second
+            | 抽象套接字 "qbm_diagd"，每秒请求一次
             v
-        qbm-diagd (root)
+        qbm-diagd (Root 权限)
             |
-            | dlopen
+            | dlopen 动态加载
             v
   /vendor/lib64/libdiag.so
             |
-            | DCI client
+            | DCI 客户端
             v
         diag-router
             |
             v
-   Modem (MPSS) DIAG log stream
+    基带 (MPSS) DIAG 日志流
 ```
 
-### DCI Only
+### 仅使用 DCI 接口（不抢占主日志会话）
 
-The helper registers as a DCI client and only adds its own log subscriptions. It never takes the main logging session, never changes the main log masks, and never switches the logging mode.
+守护进程仅注册为 DCI 客户端并添加自身的日志订阅，它绝不会接管主诊断日志会话、绝不修改主日志掩码，也绝不切换日志记录模式。
 
-Other DIAG tools and USB diagnostics therefore keep working while DIAG mode is on. The helper is read-only towards the radio.
+因此，在开启 DIAG 模式的同时，其他第三方 DIAG 工具和 USB 诊断调试依然可以正常工作。该守护进程对无线射频模块完全保持只读访问。
 
-The DCI session is opened with:
+DCI 会话通过以下流程初始化：
 
-```text
+```
 Diag_LSM_Init
-diag_register_dci_client      peripheral: modem (MPSS)
-diag_dci_set_version(1)       extended header: SIM of each log
-diag_log_stream_config        subscribe to the log codes below
+diag_register_dci_client      外设目标: modem (MPSS)
+diag_dci_set_version(1)       启用扩展头部: 区分每条日志所属的 SIM 卡
+diag_log_stream_config        订阅下方的指定日志代码
 ```
 
-On Snapdragon 865/870 the modem is an external X55, reached as a remote processor (MDM) rather than through the SoC's own MPSS. libdiag only reports which processor's MPSS supports DCI once a client is registered, so the helper registers on the SoC side first, then asks: with no MPSS there and one on the external modem, it moves to a client on the external modem. When the answer is unclear and the driver reports a remote device, it keeps a client on both and decodes whichever delivers logs first.
+在骁龙 865 / 870 等采用外挂 X55 基带的平台上，基带作为远程处理器（MDM）存在，而非集成在 SoC 内部的 MPSS 中。由于 `libdiag` 只有在客户端注册后才会报告哪个处理器的 MPSS 支持 DCI，因此守护进程会先在 SoC 侧注册，随后进行探测：若发现 SoC 侧无 MPSS 而外挂基带上存在 MPSS，则自动迁移至外挂基带建立客户端；若探测结果不明确且驱动报告存在远程设备，则会同时在两侧保留客户端，并优先解码最先传回日志的一侧。
 
-### Log Codes
+### 订阅的日志代码（Log Codes）
 
-LTE:
+LTE 相关日志：
 
-```text
-0xB173  PDSCH stat indication     MCS, modulation, RBs, layers, CRC, TB size
-0xB126  PDSCH demapper config     Tx/Rx antennas, rank, transmission mode
-0xB139  PUSCH Tx report           uplink TB size
-0xB184  CA metrics                PCell/SCell EARFCN, PCI, band, bandwidth, state
-0xB193  Serving cell measurement  per-carrier RSRP, RSRQ, SINR, also per RX chain
-0xB179  Intra-frequency measure   RSRP, RSRQ of deactivated SCells
-0xB168  Random access MSG2        timing advance
+```
+0xB173  PDSCH stat indication     MCS、调制方式、RB 数量、层数（Layers）、CRC、传输块大小（TB size）
+0xB126  PDSCH demapper config     收发天线数（Tx/Rx）、Rank（秩）、传输模式（TM）
+0xB139  PUSCH Tx report           上行传输块大小（TB size）
+0xB184  CA metrics                PCell/SCell 的 EARFCN、PCI、频段、带宽及激活状态
+0xB193  Serving cell measurement  单载波 RSRP、RSRQ、SINR，以及各接收通道（RX chain）独立测量值
+0xB179  Intra-frequency measure   未激活 SCell 辅小区的 RSRP、RSRQ
+0xB168  Random access MSG2        时间提前量（Timing Advance, TA）
 ```
 
-NR:
+NR 相关日志：
 
-```text
-0xB887  PDSCH status              MCS, modulation, RBs, layers, TB size
-0xB883  UL physical channel       uplink TB size
-0xB97F  Measurements              SS-RSRP, SS-RSRQ, RSRP per RX chain
-0xB8D8  SNR                       SS-SINR, CSI-SINR, also per RX chain
-0xB8DD  SNR (X55 to X65)          SS-SINR, CSI-SINR, also per RX chain
-0xB96A  Beam measurements (X65)   strongest beam's SNR
-0xB8A7  CSF                       CQI, rank indicator
-0xB825  RRC configuration         carriers, band, bandwidth, SCS
-0xB823  Serving cell              PCell PCI, ARFCN, band
-0xB88A  RACH attempt              timing advance
-0xB821  RRC OTA                   CSI-RS ports
+```
+0xB887  PDSCH status              MCS、调制方式、RB 数量、层数（Layers）、传输块大小（TB size）
+0xB883  UL physical channel       上行传输块大小（TB size）
+0xB97F  Measurements              SS-RSRP、SS-RSRQ，以及各接收通道（RX chain）的 RSRP
+0xB8D8  SNR                       SS-SINR、CSI-SINR，以及各接收通道的独立信噪比
+0xB8DD  SNR (X55 至 X65 基带)     SS-SINR、CSI-SINR，以及各接收通道的独立信噪比
+0xB96A  Beam measurements (X65)   最强波束的 SNR
+0xB8A7  CSF                       CQI（信道质量指示）、RI（秩指示）
+0xB825  RRC configuration         载波列表、频段、带宽、子载波间隔（SCS）
+0xB823  Serving cell              PCell 主小区 PCI、ARFCN、频段
+0xB88A  RACH attempt              时间提前量（Timing Advance, TA）
+0xB821  RRC OTA                   CSI-RS 端口配置
 ```
 
-### Log Versions
+### 日志版本兼容处理
 
-The layout of each log code changes between modem generations. Every supported version is described in a layout table (`qbm_layouts.h`), so a packet is only decoded when its version is known and its length matches.
+每条日志代码的二进制结构布局会随高通基带代际的演进发生变化。所有受支持的版本结构均定义在布局表（`qbm_layouts.h`）中，只有当数据包的版本号已知且长度完全匹配时才会进行解码。
 
-Unknown versions are skipped instead of being guessed.
+对于未知版本的数据包，程序会直接跳过而不会强行猜测解析，以确保稳定性。
 
-The NR RRC messages carried by `0xB821` are decoded with an ASN.1 decoder generated from 3GPP TS 38.331 (see Acknowledgements), to read each cell's configured CSI-RS ports.
+其中，`0xB821` 日志携带的 NR RRC 消息使用基于 3GPP TS 38.331 规范生成的 ASN.1 解码器进行解析（见“致谢”部分），用于读取每个小区配置的 CSI-RS 端口数。
 
+# 致谢
 
-# Acknowledgements
-Special thanks to [h3nnes](https://github.com/h3nnes) for developing the app version and for discovering the separate NR-SA and NR-NSA band-locking commands.
+特别感谢 [h3nnes](https://github.com/h3nnes) 开发了 Android 应用版本，并发现了独立控制 NR-SA 与 NR-NSA 频段锁定的 QMI 指令。
 
-This project also benefited greatly from the documentation, source code, and QMI protocol definitions provided by the [libqmi project](https://github.com/linux-mobile-broadband/libqmi).
+本项目也极大地受益于 [libqmi 项目](https://github.com/linux-mobile-broadband/libqmi) 提供的文档、源代码和 QMI 协议定义。
 
-Thanks also to the [asn1c](https://github.com/mouse07410/asn1c) project, created by Lev Walkin ([original repository](https://github.com/vlm/asn1c)) and maintained by mouse07410 and other contributors. The DIAG helper's NR RRC decoder is generated with it from the 3GPP TS 38.331 ASN.1 definitions ([LICENSE](app/binary/ASN1C-LICENSE)).
+同时感谢由 Lev Walkin 创建（[原始仓库](https://github.com/vlm/asn1c)）并由 mouse07410 及其他贡献者维护的 [asn1c](https://github.com/mouse07410/asn1c) 项目。DIAG 守护进程中的 NR RRC 解码器正是借助该项目从 3GPP TS 38.331 ASN.1 定义文件生成而来的（[许可证文件](app/binary/ASN1C-LICENSE)）。
