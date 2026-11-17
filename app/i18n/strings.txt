@@ -116,21 +116,21 @@ de = Klein
 [common.detach]
 en = Detach
 th = ตัดการเชื่อมต่อ
-zh = 去附着
+zh = 断开数据网络
 de = Trennen
 ru = Отключить
 
 [common.attach]
 en = Attach
 th = เชื่อมต่อ
-zh = 附着
+zh = 接入网络
 de = Verbinden
 ru = Подключить
 
 [common.reattach]
 en = Re-Attach
 th = เชื่อมต่อใหม่
-zh = 重新附着
+zh = 重新接入
 de = Erneut verbinden
 ru = Переподключить
 
@@ -246,7 +246,7 @@ ru = Применить блокировку диапазонов
 [bands.rat_lock]
 en = RAT lock
 th = ชนิดเครือข่าย
-zh = RAT 锁定
+zh = 网络制式锁定（RAT）
 de = RAT-Sperre
 ru = Блокировка RAT
 
@@ -659,14 +659,14 @@ ru = Соты не обнаружены.
 [lock.resume_table]
 en = Resume the cell table
 th = เริ่มตารางเซลล์ต่อ
-zh = 恢复小区列表
+zh = 恢复更新小区列表
 de = Zellentabelle fortsetzen
 ru = Возобновить таблицу сот
 
 [lock.freeze_table]
 en = Freeze the cell table
 th = หยุดตารางเซลล์ชั่วคราว
-zh = 冻结小区列表
+zh = 暂停更新小区列表
 de = Zellentabelle einfrieren
 ru = Приостановить таблицу сот
 
@@ -823,84 +823,84 @@ ru = Сбой сброса: {error}
 [msg.detach_failed]
 en = Detach failed
 th = ตัดการเชื่อมต่อไม่สำเร็จ
-zh = 去附着失败
+zh = 断开数据网络失败
 de = Trennen fehlgeschlagen
 ru = Сбой отключения
 
 [msg.detach_failed_error]
 en = Detach failed: {error}
 th = ตัดการเชื่อมต่อไม่สำเร็จ: {error}
-zh = 去附着失败：{error}
+zh = 断开数据网络失败：{error}
 de = Trennen fehlgeschlagen: {error}
 ru = Сбой отключения: {error}
 
 [msg.detached]
 en = Detached from network
 th = ตัดการเชื่อมต่อจากเครือข่ายแล้ว
-zh = 已从网络去附着
+zh = 已断开数据网络
 de = Vom Netzwerk getrennt
 ru = Отключено от сети
 
 [msg.attach_failed]
 en = Attach failed
 th = เชื่อมต่อไม่สำเร็จ
-zh = 附着失败
+zh = 接入网络失败
 de = Verbinden fehlgeschlagen
 ru = Сбой подключения
 
 [msg.attach_failed_error]
 en = Attach failed: {error}
 th = เชื่อมต่อไม่สำเร็จ: {error}
-zh = 附着失败：{error}
+zh = 接入网络失败：{error}
 de = Verbinden fehlgeschlagen: {error}
 ru = Сбой подключения: {error}
 
 [msg.attached]
 en = Attached to network
 th = เชื่อมต่อกับเครือข่ายแล้ว
-zh = 已附着到网络
+zh = 已接入网络
 de = Mit dem Netzwerk verbunden
 ru = Подключено к сети
 
 [msg.reattaching]
 en = Re-attaching to network…
 th = กำลังเชื่อมต่อกับเครือข่ายใหม่…
-zh = 正在重新附着到网络…
+zh = 正在重新接入网络…
 de = Erneutes Verbinden mit dem Netzwerk…
 ru = Переподключение к сети…
 
 [msg.reattach_failed]
 en = Re-attach failed
 th = เชื่อมต่อใหม่ไม่สำเร็จ
-zh = 重新附着失败
+zh = 重新接入失败
 de = Erneutes Verbinden fehlgeschlagen
 ru = Сбой переподключения
 
 [msg.reattach_failed_error]
 en = Re-attach failed: {error}
 th = เชื่อมต่อใหม่ไม่สำเร็จ: {error}
-zh = 重新附着失败：{error}
+zh = 重新接入失败：{error}
 de = Erneutes Verbinden fehlgeschlagen: {error}
 ru = Сбой переподключения: {error}
 
 [msg.reattach_left_detached]
 en = Re-attach failed; network may be left detached
 th = เชื่อมต่อใหม่ไม่สำเร็จ เครือข่ายอาจยังถูกตัดการเชื่อมต่ออยู่
-zh = 重新附着失败；网络可能仍处于去附着状态
+zh = 重新接入失败，数据网络可能仍是断开状态
 de = Erneutes Verbinden fehlgeschlagen; das Netzwerk ist möglicherweise getrennt
 ru = Сбой переподключения; сеть может остаться отключенной
 
 [msg.reattach_recovered]
 en = Re-attach recovered: attach succeeded
 th = กู้คืนการเชื่อมต่อใหม่แล้ว: เชื่อมต่อสำเร็จ
-zh = 重新附着已恢复：附着成功
+zh = 重新接入已恢复：网络已连上
 de = Erneutes Verbinden erfolgreich: Verbindung hergestellt
 ru = Переподключение восстановлено: связь установлена
 
 [msg.reattach_complete]
 en = Re-attach complete
 th = เชื่อมต่อใหม่เสร็จสิ้น
-zh = 重新附着完成
+zh = 重新接入完成
 de = Erneutes Verbinden abgeschlossen
 ru = Переподключение завершено
 
@@ -998,7 +998,7 @@ ru = Неверное число: {error}
 [sim.off]
 en = Off
 th = ปิดอยู่
-zh = 已关闭
+zh = 已停用
 de = Aus
 ru = Выкл.
 
@@ -1028,14 +1028,14 @@ ru = Запустить тестовый скрипт
 [net.resume_live]
 en = Resume live monitoring
 th = เริ่มการตรวจสอบสดต่อ
-zh = 恢复实时监控
+zh = 继续实时监控
 de = Live-Überwachung fortsetzen
 ru = Возобновить мониторинг в реальном времени
 
 [net.freeze]
 en = Freeze monitoring
 th = หยุดการตรวจสอบชั่วคราว
-zh = 冻结监控
+zh = 暂停实时监控
 de = Überwachung einfrieren
 ru = Заморозить мониторинг
 
@@ -1154,7 +1154,7 @@ ru = DIAG остановлен: {error}
 [net.not_available_round]
 en = Not available this round: {failed}
 th = ไม่พร้อมใช้งานในรอบนี้: {failed}
-zh = 本轮不可用：{failed}
+zh = 本轮无数据：{failed}
 de = In diesem Durchlauf nicht verfügbar: {failed}
 ru = Not available this round: {failed}
 
@@ -1584,14 +1584,14 @@ ru = Beam
 [display.receiver_chains]
 en = {rat} receiver chains
 th = สายรับสัญญาณ {rat}
-zh = {rat} 接收链
+zh = {rat} 接收通道
 de = {rat}-Empfangsketten
 ru = Приёмные цепи {rat}
 
 [display.not_tuned]
 en = RX{chain}: not tuned
 th = RX{chain}: ไม่ได้จูน
-zh = RX{chain}：未调谐
+zh = RX{chain}：未调至该频点
 de = RX{chain}: nicht abgestimmt
 ru = RX{chain}: не настроена
 
@@ -1703,7 +1703,7 @@ ru = {metric} недоступно
 [rrc.null]
 en = Null
 th = ไม่มีสถานะ
-zh = 无状态
+zh = 无
 de = Null
 ru = Null
 
@@ -1739,7 +1739,7 @@ ru = Сброс
 [rrc.inactive]
 en = Inactive
 th = ไม่ใช้งาน
-zh = 非活动
+zh = 非激活
 de = Inaktiv
 ru = Неактивно
 
