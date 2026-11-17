@@ -111,6 +111,15 @@ fun InfoScreen(
                 modifier = Modifier.fillMaxWidth()
             )
 
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                stringResource(R.string.info_warning),
+                style = MiuixTheme.textStyles.body1,
+                color = MiuixTheme.colorScheme.error,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
+
             Spacer(modifier = Modifier.height(24.dp))
 
             SmallTitle(stringResource(R.string.info_chinese_edition))

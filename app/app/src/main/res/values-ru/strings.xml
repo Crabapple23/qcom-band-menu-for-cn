@@ -9,6 +9,7 @@
     <string name="info_chinese_edition">Китайская версия</string>
     <string name="info_chinese_by">Перевод и поддержка: @Crabapple23</string>
     <string name="info_github_repo">github.com/Crabapple23/qcom-band-menu-by-cn</string>
+    <string name="info_warning">Не используйте блокировку диапазонов вместе с другими программами</string>
     <string name="info_credits">Авторы</string>
     <string name="info_powered_by">На базе</string>
     <string name="common_menu">Меню</string>

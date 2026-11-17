@@ -69,6 +69,14 @@ zh = github.com/Crabapple23/qcom-band-menu-by-cn
 de = github.com/Crabapple23/qcom-band-menu-by-cn
 ru = github.com/Crabapple23/qcom-band-menu-by-cn
 
+
+[info.warning]
+en = Never use the band lock while another app is locking bands too
+th = อย่าใช้การล็อกคลื่นพร้อมกับแอปอื่น
+zh = 切勿与其它软件同时使用锁区功能
+de = Die Frequenzsperre nie gleichzeitig mit anderer Software verwenden
+ru = Не используйте блокировку диапазонов вместе с другими программами
+
 [info.credits]
 en = Credits
 th = เครดิต

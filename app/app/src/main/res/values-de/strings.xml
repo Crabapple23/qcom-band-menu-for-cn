@@ -9,6 +9,7 @@
     <string name="info_chinese_edition">Chinesische Ausgabe</string>
     <string name="info_chinese_by">Übersetzt und gepflegt von @Crabapple23</string>
     <string name="info_github_repo">github.com/Crabapple23/qcom-band-menu-by-cn</string>
+    <string name="info_warning">Die Frequenzsperre nie gleichzeitig mit anderer Software verwenden</string>
     <string name="info_credits">Mitwirkende</string>
     <string name="info_powered_by">Unterstützt von</string>
     <string name="common_menu">Menü</string>

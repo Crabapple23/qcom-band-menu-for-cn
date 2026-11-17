@@ -8,11 +8,11 @@ android {
     compileSdk = 37
 
     defaultConfig {
-        applicationId = "dev.qcom.bandmenu"
+        applicationId = "dev.qcom.bandmenu.cn"
         minSdk = 29
         targetSdk = 37
-        versionCode = 68
-        versionName = "7.0.0"
+        versionCode = 7023
+        versionName = "7.0.23"
         ndk {
             abiFilters += listOf("arm64-v8a")
         }
